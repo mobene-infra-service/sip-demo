@@ -1,3 +1,4 @@
+import { persist } from 'zustand/middleware'
 import { create } from 'zustand'
 
 type Store = {
@@ -8,14 +9,21 @@ type Action = {
   setLoginInfo: (loginInfo: unknown) => void
 }
 
-const useStore = create<Store & Action>()((set) => ({
-  // store
-  loginInfo: {},
+const useStore = create<Store & Action>()(
+  persist(
+    (set) => ({
+      // store
+      loginInfo: {},
 
-  // actions
-  setLoginInfo(loginInfo) {
-    set({ loginInfo })
-  },
-}))
+      // actions
+      setLoginInfo(loginInfo) {
+        set({ loginInfo })
+      },
+    }),
+    {
+      name: 'store',
+    }
+  )
+)
 
 export default useStore
