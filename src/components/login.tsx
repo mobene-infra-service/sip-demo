@@ -12,7 +12,7 @@ import {
 } from '@/components/ui/select'
 import { RadioGroup, RadioGroupItem } from '@/components/ui/radio-group'
 
-export default function Component() {
+const LoginComponent = () => {
   return (
     <div className="max-w-4xl mx-auto p-4">
       <header className="flex items-center justify-between p-4 bg-gray-100 rounded-t-md">
@@ -219,3 +219,4 @@ function XIcon(props) {
     </svg>
   )
 }
+export default LoginComponent
