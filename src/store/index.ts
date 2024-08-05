@@ -11,18 +11,19 @@ type Action = {
   setLogStatus: (logStatus: boolean) => void
   setCurrentLoginInfo: (currentLoginInfo: LoginInfoType) => void
   addHistoryLoginInfo: (historyLoginInfo: LoginInfoType) => void
+  deleteLoginInfo: (extNo: string) => void
   setHistoryLoginInfo: (historyLoginInfo: LoginInfoType[]) => void
 }
 
 const useStore = create<Store & Action>()(
   persist(
-    (set) => ({
+    (set, getState) => ({
       loginStatus: false,
       currentLoginInfo: {
         host: '',
         port: '',
         domain: '',
-        proto: false,
+        proto: true,
         extNo: '',
         extPwd: '',
         stun: {
@@ -39,9 +40,25 @@ const useStore = create<Store & Action>()(
       },
       historyLoginInfo: [],
       addHistoryLoginInfo: (historyLoginInfo) => {
+        // 判断是否有重复的没有重复的才添加
+        if (
+          !getState().historyLoginInfo.some(
+            (item) => item.extNo === historyLoginInfo.extNo
+          )
+        )
+          set((state) => {
+            return {
+              historyLoginInfo: [...state.historyLoginInfo, historyLoginInfo],
+            }
+          })
+      },
+      deleteLoginInfo: (extNo) => {
         set((state) => {
           return {
-            historyLoginInfo: [...state.historyLoginInfo, historyLoginInfo],
+            ...state,
+            historyLoginInfo: state.historyLoginInfo.filter(
+              (item) => item.extNo !== extNo
+            ),
           }
         })
       },

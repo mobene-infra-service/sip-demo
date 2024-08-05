@@ -44,23 +44,8 @@ type SipStateType = {
   disableMic: boolean //静音
 
   loading: null
-  sipClient: undefined
   locale: 'zh' | 'en' | 'es' | 'pt'
   locales: { label: string; value: string }[]
   callEndInfo: undefined
   sipStatus: 0 | 1 | 2 | 3 | 4 | 5 | 6 | 7
-  // 1: 离线, 2: 空闲, 3: 响铃中, 4: 通话中, 5: 摘机中, 6: 小休中 7:转接中
-  statusMap: {
-    0: '未连接'
-    1: '离线'
-    2: '空闲'
-    3: '响铃中'
-    4: '通话中'
-    5: '摘机中'
-    6: '小休中'
-    7: '转接中'
-  }
-  dialogVisible: boolean
-  transferNumber: string
-  callbackInfo: string
 }

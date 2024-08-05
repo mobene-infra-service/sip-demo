@@ -2,15 +2,35 @@ import { Input } from '@/components/ui/input'
 import { Button } from '@/components/ui/button'
 import { useEffect, useState } from 'react'
 import { toast } from 'sonner'
+import useStore from '@/store'
 
 const Dialpad = (props: {
   setValue?: (v: string) => void
   hangUp: () => void
-  call: () => void
+  call: (v: string) => void
+  transferCall: (v: string) => void
 }) => {
   const { setValue, hangUp, call } = props
+  // store
+  const { currentLoginInfo } = useStore()
+
   // state
   const [phoneNumber, setPhoneNumber] = useState('')
+  const [transferModalVisible, setTransferModalVisible] =
+    useState<boolean>(false)
+  const [transferNumber, setTransferNumber] = useState<string>('')
+
+  // 1: 离线, 2: 空闲, 3: 响铃中, 4: 通话中, 5: 摘机中, 6: 小休中 7:转接中
+  const statusMap: { [key: number] } = {
+    0: '未连接',
+    1: '离线',
+    2: '空闲',
+    3: '响铃中',
+    4: '通话中',
+    5: '摘机中',
+    6: '小休中',
+    7: '转接中',
+  }
 
   const handleHangUpClick = () => {
     hangUp()
@@ -24,6 +44,23 @@ const Dialpad = (props: {
     // 保证电话号码只包含数字、*、#字符
     const reg = /^[0-9\*#]*$/
     return reg.test(phoneNumber)
+  }
+
+  const openTransferDialog = () => {
+    setTransferModalVisible(treu)
+  }
+
+  const transferCall = () => {
+    if (transferNumber === '') {
+      return toast.error('请输入转接号码')
+    }
+    props?.transferCall(transferNumber)
+    setTransferModalVisible(false)
+  }
+
+  const handleClose = () => {
+    setTransferNumber('')
+    setTransferModalVisible(false)
   }
 
   useEffect(() => {

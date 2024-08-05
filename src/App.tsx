@@ -12,6 +12,7 @@ function App() {
     useStore()
   const [loading, setLoading] = useState(false)
   const [sipClient, setSipClient] = useState<SipClient | null>(null)
+
   const [state, setState] = useState<SipStateType>({
     statusIsring: false, //是否在振铃中
     statusIsCall: false, //是否在拨打中
@@ -38,7 +39,6 @@ function App() {
     disableMic: false, //静音
 
     loading: null,
-    sipClient: undefined,
     locale: 'zh',
     locales: [
       { label: '简体中文', value: 'zh' },
@@ -48,20 +48,6 @@ function App() {
     ],
     callEndInfo: undefined,
     sipStatus: 0,
-    // 1: 离线, 2: 空闲, 3: 响铃中, 4: 通话中, 5: 摘机中, 6: 小休中 7:转接中
-    statusMap: {
-      0: '未连接',
-      1: '离线',
-      2: '空闲',
-      3: '响铃中',
-      4: '通话中',
-      5: '摘机中',
-      6: '小休中',
-      7: '转接中',
-    },
-    dialogVisible: false,
-    transferNumber: '',
-    callbackInfo: '',
   })
 
   useEffect(() => {
@@ -78,7 +64,6 @@ function App() {
   const login = () => {
     if (
       currentLoginInfo.host &&
-      currentLoginInfo.port &&
       currentLoginInfo.extNo &&
       currentLoginInfo.extPwd
     ) {
@@ -86,9 +71,11 @@ function App() {
         ...currentLoginInfo,
         stateEventListener: stateEventListener,
       }
-      setSipClient(new SipClient(currentLoginInfo as any))
-      addHistoryLoginInfo(currentLoginInfo)
       setLoading(true)
+      const client = new SipClient(configure as any)
+
+      setSipClient()
+      addHistoryLoginInfo(currentLoginInfo)
     } else {
       toast.error('Please fill in the login information')
     }
@@ -136,33 +123,31 @@ function App() {
   }
 
   //麦克风音量检测-开始
-  const testMicrophoneHandelStart = () => {
-    sipClient
-      ?.testMicrophone((volume: any) => {
-        setState({
-          ...state,
-          testMicrophoneVolume: volume,
-        })
-      })
-      .then((res: any) => {
-        setState({
-          ...state,
-          testMicrophoneOb: res,
-        })
-      })
-  }
+  // const testMicrophoneHandelStart = () => {
+  //   SipClient?.testMicrophone((volume: any) => {
+  //     setState({
+  //       ...state,
+  //       testMicrophoneVolume: volume,
+  //     })
+  //   }).then((res: any) => {
+  //     setState({
+  //       ...state,
+  //       testMicrophoneOb: res,
+  //     })
+  //   })
+  // }
 
   //麦克风音量检测-结束
-  const testMicrophoneHandelStop = () => {
-    if (state.testMicrophoneOb) {
-      state.testMicrophoneOb?.yes()
-      setState({
-        ...state,
-        testMicrophoneVolume: 0,
-        testMicrophoneOb: null,
-      })
-    }
-  }
+  // const testMicrophoneHandelStop = () => {
+  //   if (state.testMicrophoneOb) {
+  //     state.testMicrophoneOb?.yes()
+  //     setState({
+  //       ...state,
+  //       testMicrophoneVolume: 0,
+  //       testMicrophoneOb: null,
+  //     })
+  //   }
+  // }
 
   const setResting = () => {
     sipClient?.setResting()
@@ -172,32 +157,14 @@ function App() {
     sipClient?.setIdle()
   }
 
-  const openTransferDialog = () => {
-    setState({
-      ...state,
-      dialogVisible: true,
-    })
-  }
-
-  const transferCall = () => {
-    if (state.transferNumber === '') {
-      toast.error('请输入转接号码')
-    }
-    sipClient?.transferCall(state.transferNumber)
-    setState({ ...state, dialogVisible: false })
-  }
-
-  const handleClose = () => {
-    setState({
-      ...state,
-      transferNumber: '',
-      dialogVisible: false,
-    })
-  }
-
-  const stateEventListener = (event, data) => {
+  const stateEventListener = (event: any, data: any) => {
     console.log('收到事件:', event, data)
     switch (event) {
+      case 'ERROR':
+        toast.error(data.msg)
+        setLoading(false)
+        setLogStatus(false)
+        break
       case 'DISCONNECTED':
         setLogStatus(false)
         setLoading(false)
@@ -294,6 +261,7 @@ function App() {
         })
         break
       case 'CONNECTED':
+        setLoading(false)
         sipClient?.register()
         break
       case 'DISCONNECT':
@@ -324,7 +292,7 @@ function App() {
       <header className="flex items-center justify-between p-4 bg-gray-100 rounded-t-md">
         <div className="flex items-center space-x-2">
           <CircleIcon
-            className={`w-4 h-4 ${loginStatus ? 'bg-emerald-700	' : 'text-gray-500'}`}
+            className={`w-4 h-4 ${loginStatus ? 'text-emerald-700	' : 'text-gray-500'}`}
           />
           <span className="text-gray-500">
             {loginStatus ? 'Logged in' : 'Not Logged'}
@@ -336,16 +304,34 @@ function App() {
           onClick={login}
         >
           <LogInIcon className="w-4 h-4" />
-          <span>Login</span>
+          <span>{loginStatus ? 'Logout ' : 'Login'}</span>
         </Button>
       </header>
 
       {loginStatus ? (
-        <>
-          <Dialpad setValue={() => {}} hangUp={() => {}} call={() => {}} />
-        </>
+        // 检测sipClient是否存在
+        sipClient &&
+        sipClient.call &&
+        sipClient.transferCall && (
+          <>
+            <Dialpad
+              setValue={() => {}}
+              hangUp={() => {}}
+              call={sipClient.call}
+              transferCall={sipClient.transferCall}
+            />
+          </>
+        )
       ) : (
-        <>{loading ? <Spinner /> : <LoginComponent />}</>
+        <>
+          {loading ? (
+            <div className="flex flex-row justify-center items-center h-[500px]">
+              <Spinner size={80} />
+            </div>
+          ) : (
+            <LoginComponent />
+          )}
+        </>
       )}
     </div>
   )
