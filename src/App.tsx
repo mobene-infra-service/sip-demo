@@ -73,8 +73,7 @@ function App() {
       }
       setLoading(true)
       const client = new SipClient(configure as any)
-
-      setSipClient()
+      setSipClient(client)
       addHistoryLoginInfo(currentLoginInfo)
     } else {
       toast.error('Please fill in the login information')
