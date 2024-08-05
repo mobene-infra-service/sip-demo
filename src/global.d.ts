@@ -28,7 +28,6 @@ type SipStateType = {
   agentNo: string //分机号
   discaller: string //主叫号码
   discallee: string //被叫号码
-  callPhoneNumber: string //呼出号码
 
   historyAccounts: string[] //历史账号列表
   lastAccount: string //最后一次使用的账号配置

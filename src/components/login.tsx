@@ -110,7 +110,6 @@ const LoginComponent = () => {
             </div>
           </div>
           <div className="space-y-2">
-            <Label>Advanced settings </Label>
             <div className="grid grid-cols-2 gap-4">
               <div className="space-y-2">
                 <Label htmlFor="language">Language</Label>

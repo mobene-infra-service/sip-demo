@@ -23,7 +23,6 @@ function App() {
     agentNo: '', //分机号
     discaller: '', //主叫号码
     discallee: '', //被叫号码
-    callPhoneNumber: '', //呼出号码
 
     historyAccounts: [], //历史账号列表
     lastAccount: '', //最后一次使用的账号配置
@@ -84,35 +83,6 @@ function App() {
     sipClient?.unregister()
   }
 
-  const answer = () => {
-    sipClient?.answer()
-  }
-
-  const hold = () => {
-    sipClient?.hold()
-  }
-
-  const unhold = () => {
-    sipClient?.unhold()
-  }
-
-  const makeCall = () => {
-    if (state.callPhoneNumber.length <= 2) {
-      return toast.error('Please enter the phone number')
-    }
-    setState({
-      ...state,
-      callEndInfo: undefined,
-      discallee: state.callPhoneNumber,
-    })
-
-    sipClient?.call(state.callPhoneNumber.trim())
-  }
-
-  const hangup = () => {
-    sipClient?.hangup()
-  }
-
   const mute = () => {
     if (state.disableMic) {
       sipClient?.unmute()
@@ -147,14 +117,6 @@ function App() {
   //     })
   //   }
   // }
-
-  const setResting = () => {
-    sipClient?.setResting()
-  }
-
-  const setIdle = () => {
-    sipClient?.setIdle()
-  }
 
   const stateEventListener = (event: any, data: any) => {
     console.log('收到事件:', event, data)
@@ -261,7 +223,6 @@ function App() {
         break
       case 'CONNECTED':
         setLoading(false)
-        sipClient?.register()
         break
       case 'DISCONNECT':
         console.log('DISCONNECT', data.msg)
@@ -291,34 +252,39 @@ function App() {
       <header className="flex items-center justify-between p-4 bg-gray-100 rounded-t-md">
         <div className="flex items-center space-x-2">
           <CircleIcon
-            className={`w-4 h-4 ${loginStatus ? 'text-emerald-700	' : 'text-gray-500'}`}
+            className={`w-4 h-4 `}
+            fill={loginStatus ? 'green' : 'gray-500'}
           />
           <span className="text-gray-500">
-            {loginStatus ? 'Logged in' : 'Not Logged'}
+            {loginStatus ? `${state.agentNo}: Logged in` : 'Not Logged'}
           </span>
         </div>
-        <Button
-          variant="ghost"
-          className="flex items-center space-x-1"
-          onClick={login}
-        >
-          <LogInIcon className="w-4 h-4" />
-          <span>{loginStatus ? 'Logout ' : 'Login'}</span>
-        </Button>
+        {loginStatus ? (
+          <Button
+            variant="ghost"
+            className="flex items-center space-x-1"
+            onClick={logout}
+          >
+            <LogInIcon className="w-4 h-4" />
+            <span>Logout</span>
+          </Button>
+        ) : (
+          <Button
+            variant="ghost"
+            className="flex items-center space-x-1"
+            onClick={login}
+          >
+            <LogInIcon className="w-4 h-4" />
+            <span>Login</span>
+          </Button>
+        )}
       </header>
 
       {loginStatus ? (
         // 检测sipClient是否存在
-        sipClient &&
-        sipClient.call &&
-        sipClient.transferCall && (
+        sipClient && (
           <>
-            <Dialpad
-              setValue={() => {}}
-              hangUp={() => {}}
-              call={sipClient.call}
-              transferCall={sipClient.transferCall}
-            />
+            <Dialpad sipClient={sipClient} />
           </>
         )
       ) : (
@@ -344,7 +310,7 @@ function CircleIcon(props: any) {
       width="24"
       height="24"
       viewBox="0 0 24 24"
-      fill="none"
+      fill={props.fill || 'none'}
       stroke="currentColor"
       strokeWidth="2"
       strokeLinecap="round"
@@ -362,8 +328,8 @@ function LogInIcon(props: any) {
       xmlns="http://www.w3.org/2000/svg"
       width="24"
       height="24"
-      viewBox="0 0 24 24"
       fill="none"
+      viewBox="0 0 24 24"
       stroke="currentColor"
       strokeWidth="2"
       strokeLinecap="round"
