@@ -8,53 +8,23 @@ import Spinner from '@/components/spin'
 import { toast } from 'sonner'
 
 function App() {
-  const { loginStatus, setLogStatus, currentLoginInfo, addHistoryLoginInfo } =
-    useStore()
+  const {
+    loginStatus,
+    setLogStatus,
+    currentLoginInfo,
+    addHistoryLoginInfo,
+    sipState,
+    setSipState,
+  } = useStore()
   const [loading, setLoading] = useState(false)
   const [sipClient, setSipClient] = useState<SipClient | null>(null)
-
-  const [state, setState] = useState<SipStateType>({
-    statusIsring: false, //是否在振铃中
-    statusIsCall: false, //是否在拨打中
-    statusIsHold: false, //是否在保持中
-
-    callDirection: '', //呼叫方向
-
-    agentNo: '', //分机号
-    discaller: '', //主叫号码
-    discallee: '', //被叫号码
-
-    historyAccounts: [], //历史账号列表
-    lastAccount: '', //最后一次使用的账号配置
-
-    networkSpeed: 0, //网速
-    testMicrophoneOb: null,
-    testMicrophoneVolume: 0,
-    mediaDevices: null,
-
-    latency_stat: undefined,
-    autoAnswer: false, //自动接听
-    autoDisableMic: false, //自动静音
-    disableMic: false, //静音
-
-    loading: null,
-    locale: 'zh',
-    locales: [
-      { label: '简体中文', value: 'zh' },
-      { label: 'English', value: 'en' },
-      { label: 'Spanish', value: 'es' },
-      { label: 'Portuguese', value: 'pt' },
-    ],
-    callEndInfo: undefined,
-    sipStatus: 0,
-  })
 
   useEffect(() => {
     // 每次刷新保证登出
     setLogStatus(false)
     SipClient.getMediaDeviceInfo().then((res: any) => {
-      setState({
-        ...state,
+      setSipState({
+        ...sipState,
         mediaDevices: res,
       })
     })
@@ -81,14 +51,6 @@ function App() {
 
   const logout = () => {
     sipClient?.unregister()
-  }
-
-  const mute = () => {
-    if (state.disableMic) {
-      sipClient?.unmute()
-    } else {
-      sipClient?.mute()
-    }
   }
 
   //麦克风音量检测-开始
@@ -134,14 +96,14 @@ function App() {
       case 'REGISTERED':
         setLogStatus(true)
         setLoading(false)
-        setState({
-          ...state,
+        setSipState({
+          ...sipState,
           agentNo: data.localAgent,
         })
         break
       case 'UNREGISTERED':
-        setState({
-          ...state,
+        setSipState({
+          ...sipState,
           statusIsHold: false,
           statusIsring: false,
           statusIsCall: false,
@@ -152,21 +114,21 @@ function App() {
         setLogStatus(false)
         break
       case 'INCOMING_CALL':
-        setState({
-          ...state,
+        setSipState({
+          ...sipState,
           callEndInfo: undefined,
           statusIsring: true,
           callDirection: data.direction,
         })
-        if (state.autoAnswer) {
+        if (sipState.autoAnswer) {
           //自动应答
           sipClient?.answer()
         }
         break
       // this.playRingMedia();
       case 'OUTGOING_CALL':
-        setState({
-          ...state,
+        setSipState({
+          ...sipState,
           callEndInfo: undefined,
           statusIsring: true,
           callDirection: data.direction,
@@ -175,20 +137,20 @@ function App() {
         })
         break
       case 'IN_CALL':
-        if (state.autoDisableMic) {
+        if (sipState.autoDisableMic) {
           //自动禁音
           sipClient?.mute()
         }
-        setState({
-          ...state,
+        setSipState({
+          ...sipState,
           statusIsring: false,
           statusIsCall: true,
           statusIsHold: false,
         })
         break
       case 'CALL_END':
-        setState({
-          ...state,
+        setSipState({
+          ...sipState,
           statusIsring: false,
           statusIsCall: false,
           statusIsHold: false,
@@ -198,26 +160,26 @@ function App() {
         })
         break
       case 'HOLD':
-        setState({
-          ...state,
+        setSipState({
+          ...sipState,
           statusIsHold: true,
         })
         break
       case 'UNHOLD':
-        setState({
-          ...state,
+        setSipState({
+          ...sipState,
           statusIsHold: false,
         })
         break
       case 'MUTE':
-        setState({
-          ...state,
+        setSipState({
+          ...sipState,
           disableMic: true,
         })
         break
       case 'UNMUTE':
-        setState({
-          ...state,
+        setSipState({
+          ...sipState,
           disableMic: false,
         })
         break
@@ -235,8 +197,8 @@ function App() {
         toast.error('Register failed')
         break
       case 'LATENCY_STAT':
-        setState({
-          ...state,
+        setSipState({
+          ...sipState,
           latency_stat: data,
         })
         break
@@ -256,7 +218,7 @@ function App() {
             fill={loginStatus ? 'green' : 'gray-500'}
           />
           <span className="text-gray-500">
-            {loginStatus ? `${state.agentNo}: Logged in` : 'Not Logged'}
+            {loginStatus ? `${sipState?.agentNo}: Logged in` : 'Not Logged'}
           </span>
         </div>
         {loginStatus ? (

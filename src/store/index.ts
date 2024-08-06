@@ -5,6 +5,7 @@ type Store = {
   loginStatus: boolean
   currentLoginInfo: LoginInfoType
   historyLoginInfo: LoginInfoType[]
+  sipState: SipStateType
 }
 
 type Action = {
@@ -13,6 +14,7 @@ type Action = {
   addHistoryLoginInfo: (historyLoginInfo: LoginInfoType) => void
   deleteLoginInfo: (extNo: string) => void
   setHistoryLoginInfo: (historyLoginInfo: LoginInfoType[]) => void
+  setSipState: (sipState: SipStateType) => void
 }
 
 const useStore = create<Store & Action>()(
@@ -32,13 +34,48 @@ const useStore = create<Store & Action>()(
           username: '',
           password: '',
         },
-        checkMic: false,
+        checkMic: true,
         autoRegister: true,
         autoAnswer: false,
         autoMute: false,
         lang: 'en',
       },
+      sipState: {
+        statusIsring: false, //是否在振铃中
+        statusIsCall: false, //是否在拨打中
+        statusIsHold: false, //是否在保持中
+
+        callDirection: '', //呼叫方向
+
+        agentNo: '', //分机号
+        discaller: '', //主叫号码
+        discallee: '', //被叫号码
+
+        historyAccounts: [], //历史账号列表
+        lastAccount: '', //最后一次使用的账号配置
+
+        networkSpeed: 0, //网速
+        testMicrophoneOb: null,
+        testMicrophoneVolume: 0,
+        mediaDevices: null,
+
+        latency_stat: undefined,
+        autoAnswer: false, //自动接听
+        autoDisableMic: false, //自动静音
+        disableMic: false, //静音
+
+        loading: null,
+        locale: 'zh',
+        locales: [
+          { label: '简体中文', value: 'zh' },
+          { label: 'English', value: 'en' },
+          { label: 'Spanish', value: 'es' },
+          { label: 'Portuguese', value: 'pt' },
+        ],
+        callEndInfo: undefined,
+      },
       historyLoginInfo: [],
+      setSipState: (sipState) => set({ sipState }),
       addHistoryLoginInfo: (historyLoginInfo) => {
         // 判断是否有重复的没有重复的才添加
         if (

@@ -37,7 +37,7 @@ type SipStateType = {
   testMicrophoneVolume: number
   mediaDevices: null
 
-  latency_stat: undefined
+  latency_stat: undefined | any
   autoAnswer: boolean //自动接听
   autoDisableMic: boolean //自动静音
   disableMic: boolean //静音
@@ -46,5 +46,4 @@ type SipStateType = {
   locale: 'zh' | 'en' | 'es' | 'pt'
   locales: { label: string; value: string }[]
   callEndInfo: undefined
-  sipStatus: 0 | 1 | 2 | 3 | 4 | 5 | 6 | 7
 }
