@@ -37,7 +37,7 @@ const statusMap: { [key: number]: string } = {
 const Dialpad = (props: { sipClient: SipClient }) => {
   const { sipClient } = props
   // store
-  const { sipState } = useStore()
+  const { sipState, latency_stat } = useStore()
 
   // state
   const [phoneNumber, setPhoneNumber] = useState('')
@@ -131,18 +131,17 @@ const Dialpad = (props: { sipClient: SipClient }) => {
   return (
     <div className="flex flex-col w-full">
       <div>
-        {sipState.latency_stat !== undefined && (
+        {latency_stat !== undefined && (
           <>
-            <div>Delay: {sipState.latency_stat?.latencyTime}ms</div>
+            <div>Delay: {latency_stat?.latencyTime}ms</div>
             <div>
               PacketLoss:
-              {(sipState.latency_stat.upLossRate * 100).toFixed(2)}% /
-              {(sipState.latency_stat.downLossRate * 100).toFixed(2)}%
+              {(latency_stat.upLossRate * 100).toFixed(2)}% /
+              {(latency_stat.downLossRate * 100).toFixed(2)}%
             </div>
             <Progress
-              value={sipState.latency_stat.upAudioLevel * 100}
+              value={latency_stat.upAudioLevel * 100}
               max={100}
-              color="green"
               className="w-full"
             />
           </>

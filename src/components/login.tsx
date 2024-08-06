@@ -11,7 +11,7 @@ import {
   SelectItem,
 } from '@/components/ui/select'
 import { RadioGroup, RadioGroupItem } from '@/components/ui/radio-group'
-import useStore from '@/store'
+import useLoginStore from '@/store/loginInfo'
 
 const LoginComponent = () => {
   const {
@@ -19,7 +19,7 @@ const LoginComponent = () => {
     setCurrentLoginInfo,
     historyLoginInfo,
     setHistoryLoginInfo,
-  } = useStore()
+  } = useLoginStore()
 
   // 当所有currentLoginInfo的值改变时，更新store中的currentLoginInfo
   const handleCurrentLoginInfoChange = (key: string, value: any) => {

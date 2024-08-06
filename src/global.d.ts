@@ -37,7 +37,6 @@ type SipStateType = {
   testMicrophoneVolume: number
   mediaDevices: null
 
-  latency_stat: undefined | any
   autoAnswer: boolean //自动接听
   autoDisableMic: boolean //自动静音
   disableMic: boolean //静音

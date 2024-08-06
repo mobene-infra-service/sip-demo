@@ -1,6 +1,7 @@
 import LoginComponent from '@/components/login'
 import Dialpad from '@/components/dialpad'
 import useStore from '@/store'
+import useLoginStore from '@/store/loginInfo'
 import SipClient from 'sip-call-ring'
 import { useEffect, useState } from 'react'
 import { Button } from '@/components/ui/button'
@@ -8,14 +9,9 @@ import Spinner from '@/components/spin'
 import { toast } from 'sonner'
 
 function App() {
-  const {
-    loginStatus,
-    setLogStatus,
-    currentLoginInfo,
-    addHistoryLoginInfo,
-    sipState,
-    setSipState,
-  } = useStore()
+  const { loginStatus, setLogStatus, sipState, setSipState, setLantencyStat } =
+    useStore()
+  const { currentLoginInfo, addHistoryLoginInfo } = useLoginStore()
   const [loading, setLoading] = useState(false)
   const [sipClient, setSipClient] = useState<SipClient | null>(null)
 
@@ -53,33 +49,6 @@ function App() {
     sipClient?.unregister()
   }
 
-  //麦克风音量检测-开始
-  // const testMicrophoneHandelStart = () => {
-  //   SipClient?.testMicrophone((volume: any) => {
-  //     setState({
-  //       ...state,
-  //       testMicrophoneVolume: volume,
-  //     })
-  //   }).then((res: any) => {
-  //     setState({
-  //       ...state,
-  //       testMicrophoneOb: res,
-  //     })
-  //   })
-  // }
-
-  //麦克风音量检测-结束
-  // const testMicrophoneHandelStop = () => {
-  //   if (state.testMicrophoneOb) {
-  //     state.testMicrophoneOb?.yes()
-  //     setState({
-  //       ...state,
-  //       testMicrophoneVolume: 0,
-  //       testMicrophoneOb: null,
-  //     })
-  //   }
-  // }
-
   const stateEventListener = (event: any, data: any) => {
     console.log('收到事件:', event, data)
     switch (event) {
@@ -108,9 +77,9 @@ function App() {
           statusIsring: false,
           statusIsCall: false,
           disableMic: false,
-          latency_stat: undefined,
           callEndInfo: undefined,
         })
+        setLantencyStat(undefined)
         setLogStatus(false)
         break
       case 'INCOMING_CALL':
@@ -133,7 +102,7 @@ function App() {
           statusIsring: true,
           callDirection: data.direction,
           discaller: data.otherLegNumber,
-          discallee: state.agentNo,
+          discallee: sipState.agentNo,
         })
         break
       case 'IN_CALL':
@@ -155,9 +124,9 @@ function App() {
           statusIsCall: false,
           statusIsHold: false,
           disableMic: false,
-          latency_stat: undefined,
           callEndInfo: data,
         })
+        setLantencyStat(undefined)
         break
       case 'HOLD':
         setSipState({
@@ -197,10 +166,7 @@ function App() {
         toast.error('Register failed')
         break
       case 'LATENCY_STAT':
-        setSipState({
-          ...sipState,
-          latency_stat: data,
-        })
+        setLantencyStat(data)
         break
       case 'MIC_ERROR':
         toast.error(data.msg)
