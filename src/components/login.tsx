@@ -50,9 +50,7 @@ const LoginComponent = () => {
                 placeholder="input your server location"
                 value={currentLoginInfo.host}
                 onChange={(e) => {
-                  if (e.target.value) {
-                    handleCurrentLoginInfoChange('host', e.target.value)
-                  }
+                  handleCurrentLoginInfoChange('host', e.target.value)
                 }}
               />
             </div>
@@ -63,9 +61,7 @@ const LoginComponent = () => {
                 placeholder="port"
                 value={currentLoginInfo.port}
                 onChange={(e) => {
-                  if (e.target.value) {
-                    handleCurrentLoginInfoChange('port', e.target.value)
-                  }
+                  handleCurrentLoginInfoChange('port', e.target.value)
                 }}
               />
             </div>
@@ -76,9 +72,7 @@ const LoginComponent = () => {
                 placeholder="Extension Number"
                 value={currentLoginInfo.extNo}
                 onChange={(e) => {
-                  if (e.target.value) {
-                    handleCurrentLoginInfoChange('extNo', e.target.value)
-                  }
+                  handleCurrentLoginInfoChange('extNo', e.target.value)
                 }}
               />
             </div>
@@ -91,9 +85,7 @@ const LoginComponent = () => {
                   placeholder="input your password"
                   value={currentLoginInfo.extPwd}
                   onChange={(e) => {
-                    if (e.target.value) {
-                      handleCurrentLoginInfoChange('extPwd', e.target.value)
-                    }
+                    handleCurrentLoginInfoChange('extPwd', e.target.value)
                   }}
                 />
               </div>
@@ -199,13 +191,11 @@ const LoginComponent = () => {
                       id="extension"
                       value={currentLoginInfo.stun.username}
                       onChange={(e) => {
-                        if (e.target.value) {
-                          const tempStun = {
-                            ...currentLoginInfo.stun,
-                            username: e.target.value,
-                          }
-                          handleCurrentLoginInfoChange('stun', tempStun)
+                        const tempStun = {
+                          ...currentLoginInfo.stun,
+                          username: e.target.value,
                         }
+                        handleCurrentLoginInfoChange('stun', tempStun)
                       }}
                     />
                   </div>
@@ -217,13 +207,11 @@ const LoginComponent = () => {
                         type="password"
                         value={currentLoginInfo.stun.password}
                         onChange={(e) => {
-                          if (e.target.value) {
-                            const tempStun = {
-                              ...currentLoginInfo.stun,
-                              password: e.target.value,
-                            }
-                            handleCurrentLoginInfoChange('stun', tempStun)
+                          const tempStun = {
+                            ...currentLoginInfo.stun,
+                            password: e.target.value,
                           }
+                          handleCurrentLoginInfoChange('stun', tempStun)
                         }}
                       />
                     </div>
