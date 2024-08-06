@@ -47,11 +47,11 @@ const Dialpad = (props: { sipClient: SipClient }) => {
   const [transferNumber, setTransferNumber] = useState<string>('')
   // const [callbackInfo, setCallbackInfo] = useState<string>('')
 
-  const checkPhoneNumber = (phoneNumber: string) => {
-    // 保证电话号码只包含数字、*、#字符
-    const reg = /^[0-9*#]*$/
-    return reg.test(phoneNumber)
-  }
+  // const checkPhoneNumber = (phoneNumber: string) => {
+  //   // 保证电话号码只包含数字、*、#字符
+  //   const reg = /^[0-9*#]*$/
+  //   return reg.test(phoneNumber)
+  // }
 
   const openTransferDialog = () => {
     setTransferModalVisible(true)
@@ -100,13 +100,6 @@ const Dialpad = (props: { sipClient: SipClient }) => {
   const hangup = () => {
     sipClient?.hangup()
   }
-
-  useEffect(() => {
-    if (!checkPhoneNumber(phoneNumber)) {
-      toast.error('Invalid phone number')
-      setPhoneNumber(phoneNumber.slice(0, -1))
-    }
-  }, [phoneNumber])
 
   useEffect(() => {
     let timer: NodeJS.Timeout | null

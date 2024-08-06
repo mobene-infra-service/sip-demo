@@ -16,8 +16,6 @@ function App() {
   const [sipClient, setSipClient] = useState<SipClient | null>(null)
 
   useEffect(() => {
-    // 每次刷新保证登出
-    setLogStatus(false)
     SipClient.getMediaDeviceInfo().then((res: any) => {
       setSipState({
         ...sipState,
