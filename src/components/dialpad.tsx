@@ -45,7 +45,7 @@ const Dialpad = (props: { sipClient: SipClient }) => {
   const [transferModalVisible, setTransferModalVisible] =
     useState<boolean>(false)
   const [transferNumber, setTransferNumber] = useState<string>('')
-  const [callbackInfo, setCallbackInfo] = useState<string>('')
+  // const [callbackInfo, setCallbackInfo] = useState<string>('')
 
   const checkPhoneNumber = (phoneNumber: string) => {
     // 保证电话号码只包含数字、*、#字符
@@ -265,7 +265,7 @@ const Dialpad = (props: { sipClient: SipClient }) => {
               <div className="flex flex-col">
                 <div>Status: {statusMap[sipStatus]}</div>
 
-                <div>CallbackInfo: {callbackInfo}</div>
+                {/* <div>CallbackInfo: {callbackInfo}</div> */}
               </div>
             </CardFooter>
           </Card>
