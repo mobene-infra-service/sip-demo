@@ -18,7 +18,7 @@ const LoginComponent = () => {
     currentLoginInfo,
     setCurrentLoginInfo,
     historyLoginInfo,
-    setHistoryLoginInfo,
+    deleteLoginInfo,
   } = useLoginStore()
 
   // 当所有currentLoginInfo的值改变时，更新store中的currentLoginInfo
@@ -241,7 +241,7 @@ const LoginComponent = () => {
                   key={index}
                   className="flex items-center justify-between p-2 border rounded-md"
                 >
-                  <span>{`${currentLoginInfo.extNo}@${currentLoginInfo.host}:${currentLoginInfo.port}`}</span>
+                  <span>{`${account.extNo}@${account.host}:${account.port}`}</span>
                   <div className="flex space-x-2">
                     <Button
                       variant="secondary"
@@ -256,12 +256,7 @@ const LoginComponent = () => {
                       variant="destructive"
                       size="sm"
                       onClick={() => {
-                        const newHistoryLoginInfo = historyLoginInfo.filter(
-                          (item) =>
-                            `${currentLoginInfo.extNo}@${currentLoginInfo.host}:${currentLoginInfo.port}${currentLoginInfo.extNo}` !==
-                            `${item.extNo}@${item.host}:${item.port}${item.extNo}`
-                        )
-                        setHistoryLoginInfo(newHistoryLoginInfo)
+                        deleteLoginInfo(account.extNo)
                       }}
                     >
                       Delete
