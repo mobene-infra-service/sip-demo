@@ -108,7 +108,7 @@ const Dialpad = (props: { sipClient: SipClient }) => {
         // 实时更新sip status状态
         timer = setInterval(() => {
           setSipStatus(sipClient?.getSipStatus())
-        }, 2000)
+        }, 1000)
       }
     }
 
