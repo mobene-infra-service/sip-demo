@@ -22,7 +22,6 @@ function App() {
   const { currentLoginInfo, addHistoryLoginInfo } = useLoginStore()
   const [loading, setLoading] = useState(false)
   const [sipClient, setSipClient] = useState<SipClient | null>(null)
-  const [currentAgentNo, setCurrentAgentNo] = useState<string>('')
 
   useEffect(() => {
     SipClient.getMediaDeviceInfo().then((res: any) => {

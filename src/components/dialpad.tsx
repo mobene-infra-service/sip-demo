@@ -21,7 +21,7 @@ import { useEffect, useState } from 'react'
 import { toast } from 'sonner'
 import SipClient from 'sip-call-ring'
 import useStore from '@/store'
-import TimeCount, { TimeAction } from './time-count'
+import TimeCount from '@/components/time-count'
 
 // 1: 离线, 2: 空闲, 3: 响铃中, 4: 通话中, 5: 摘机中, 6: 小休中 7:转接中
 const statusMap: { [key: number]: string } = {
@@ -132,7 +132,7 @@ const Dialpad = (props: { sipClient: SipClient }) => {
       {(sipState?.statusIsCall || sipState?.statusIsring) && (
         <div>
           <div>Number: {discallee}</div>
-          <TimeCount action={TimeAction.Start} />
+          <TimeCount action={countTimeAction} />
         </div>
       )}
       <div>
