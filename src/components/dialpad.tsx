@@ -57,11 +57,14 @@ const Dialpad = (props: { sipClient: SipClient }) => {
     setTransferModalVisible(true)
   }
 
-  const transferCall = () => {
+  const transferCall = async () => {
     if (transferNumber === '') {
       return toast.error('请输入转接号码')
     }
-    sipClient?.transferCall(transferNumber)
+    const res = await sipClient?.transferCall(transferNumber)
+    if (res?.msg) {
+      toast.info(res.msg)
+    }
     setTransferNumber('')
     setTransferModalVisible(false)
   }
