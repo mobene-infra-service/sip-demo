@@ -21,6 +21,7 @@ import { useEffect, useState } from 'react'
 import { toast } from 'sonner'
 import SipClient from 'sip-call-ring'
 import useStore from '@/store'
+import TimeCount, { TimeAction } from './time-count'
 
 // 1: 离线, 2: 空闲, 3: 响铃中, 4: 通话中, 5: 摘机中, 6: 小休中 7:转接中
 const statusMap: { [key: number]: string } = {
@@ -37,7 +38,8 @@ const statusMap: { [key: number]: string } = {
 const Dialpad = (props: { sipClient: SipClient }) => {
   const { sipClient } = props
   // store
-  const { sipState, latency_stat } = useStore()
+  const { sipState, latency_stat, discallee, setDiscallee, countTimeAction } =
+    useStore()
 
   // state
   const [phoneNumber, setPhoneNumber] = useState('')
@@ -98,6 +100,7 @@ const Dialpad = (props: { sipClient: SipClient }) => {
 
   const makeCall = () => {
     sipClient?.call(phoneNumber.trim())
+    setDiscallee(phoneNumber.trim())
   }
 
   const hangup = () => {
@@ -126,6 +129,12 @@ const Dialpad = (props: { sipClient: SipClient }) => {
 
   return (
     <div className="flex flex-col w-full">
+      {(sipState?.statusIsCall || sipState?.statusIsring) && (
+        <div>
+          <div>Number: {discallee}</div>
+          <TimeCount action={TimeAction.Start} />
+        </div>
+      )}
       <div>
         {latency_stat !== undefined && (
           <>

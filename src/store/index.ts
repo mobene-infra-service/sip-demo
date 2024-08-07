@@ -1,19 +1,26 @@
 import { create } from 'zustand'
+import { TimeAction } from '@/components/time-count'
 
 type Store = {
   loginStatus: boolean
   sipState: SipStateType
   latency_stat: undefined | any
+  countTimeAction: TimeAction
+  discallee: string
 }
 
 type Action = {
   setLogStatus: (logStatus: boolean) => void
   setSipState: (sipState: SipStateType) => void
   setLantencyStat: (latency_stat: any) => void
+  setCountTimeAction: (countTimeAction: TimeAction) => void
+  setDiscallee: (discallee: string) => void
 }
 
 const useStore = create<Store & Action>()((set) => ({
   loginStatus: false,
+  discallee: '',
+  countTimeAction: TimeAction.Stop,
   sipState: {
     statusIsring: false, //是否在振铃中
     statusIsCall: false, //是否在拨打中
@@ -49,6 +56,8 @@ const useStore = create<Store & Action>()((set) => ({
   },
   historyLoginInfo: [],
   latency_stat: undefined,
+  setCountTimeAction: (countTimeAction) => set({ countTimeAction }),
+  setDiscallee: (discallee) => set({ discallee }),
   setLantencyStat: (latency_stat) => set({ latency_stat }),
   setSipState: (sipState) => set({ sipState }),
   setLogStatus: (loginStatus) => set({ loginStatus }),

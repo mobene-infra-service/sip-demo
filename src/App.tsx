@@ -7,13 +7,22 @@ import { useEffect, useState } from 'react'
 import { Button } from '@/components/ui/button'
 import Spinner from '@/components/spin'
 import { toast } from 'sonner'
+import { TimeAction } from '@/components/time-count'
 
 function App() {
-  const { loginStatus, setLogStatus, sipState, setSipState, setLantencyStat } =
-    useStore()
+  const {
+    loginStatus,
+    setLogStatus,
+    sipState,
+    setSipState,
+    setLantencyStat,
+    setDiscallee,
+    setCountTimeAction,
+  } = useStore()
   const { currentLoginInfo, addHistoryLoginInfo } = useLoginStore()
   const [loading, setLoading] = useState(false)
   const [sipClient, setSipClient] = useState<SipClient | null>(null)
+  const [currentAgentNo, setCurrentAgentNo] = useState<string>('')
 
   useEffect(() => {
     SipClient.getMediaDeviceInfo().then((res: any) => {
@@ -53,7 +62,6 @@ function App() {
       case 'ERROR':
         toast.error(data.msg)
         setLoading(false)
-        setLogStatus(false)
         break
       case 'DISCONNECTED':
         setLogStatus(false)
@@ -94,20 +102,22 @@ function App() {
         break
       // this.playRingMedia();
       case 'OUTGOING_CALL':
+        setCountTimeAction(TimeAction.Start)
         setSipState({
           ...sipState,
           callEndInfo: undefined,
           statusIsring: true,
           callDirection: data.direction,
           discaller: data.otherLegNumber,
-          discallee: sipState.agentNo,
         })
+        setDiscallee(sipState.agentNo)
         break
       case 'IN_CALL':
         if (sipState.autoDisableMic) {
           //自动禁音
           sipClient?.mute()
         }
+        setCountTimeAction(TimeAction.Start)
         setSipState({
           ...sipState,
           statusIsring: false,
@@ -124,6 +134,7 @@ function App() {
           disableMic: false,
           callEndInfo: data,
         })
+        setCountTimeAction(TimeAction.Stop)
         setLantencyStat(undefined)
         break
       case 'HOLD':
@@ -182,7 +193,9 @@ function App() {
             fill={loginStatus ? 'green' : 'gray-500'}
           />
           <span className="text-gray-500">
-            {loginStatus ? `${sipState?.agentNo}: Logged in` : 'Not Logged'}
+            {loginStatus
+              ? `${currentLoginInfo.extNo}: Logged in`
+              : 'Not Logged'}
           </span>
         </div>
         {loginStatus ? (
