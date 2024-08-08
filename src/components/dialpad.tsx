@@ -38,8 +38,15 @@ const statusMap: { [key: number]: string } = {
 const Dialpad = (props: { sipClient: SipClient }) => {
   const { sipClient } = props
   // store
-  const { sipState, latency_stat, discallee, setDiscallee, countTimeAction } =
-    useStore()
+  const {
+    sipState,
+    latency_stat,
+    discallee,
+    setDiscallee,
+    countTimeAction,
+    disableMic,
+    statusIsHold,
+  } = useStore()
 
   // state
   const [phoneNumber, setPhoneNumber] = useState('')
@@ -91,7 +98,7 @@ const Dialpad = (props: { sipClient: SipClient }) => {
   }
 
   const mute = () => {
-    if (sipState.disableMic) {
+    if (disableMic) {
       sipClient?.unmute()
     } else {
       sipClient?.mute()
@@ -225,11 +232,11 @@ const Dialpad = (props: { sipClient: SipClient }) => {
               )}
             {sipState?.statusIsCall && (
               <Button variant="secondary" onClick={mute}>
-                {sipState.disableMic ? 'UnMute' : 'Mute'}
+                {disableMic ? 'UnMute' : 'Mute'}
               </Button>
             )}
             {sipState?.statusIsCall &&
-              (sipState?.statusIsHold ? (
+              (!statusIsHold ? (
                 <Button variant="secondary" onClick={hold}>
                   Hold
                 </Button>

@@ -7,6 +7,8 @@ type Store = {
   latency_stat: undefined | any
   countTimeAction: TimeAction
   discallee: string
+  disableMic: boolean
+  statusIsHold: boolean
 }
 
 type Action = {
@@ -14,6 +16,8 @@ type Action = {
   setSipState: (sipState: SipStateType) => void
   setLantencyStat: (latency_stat: any) => void
   setCountTimeAction: (countTimeAction: TimeAction) => void
+  setStatusIsHold: (statusIsHold: boolean) => void
+  setDisableMic: (disableMic: boolean) => void
   setDiscallee: (discallee: string) => void
 }
 
@@ -21,10 +25,11 @@ const useStore = create<Store & Action>()((set) => ({
   loginStatus: false,
   discallee: '',
   countTimeAction: TimeAction.Stop,
+  disableMic: false,
+  statusIsHold: false,
   sipState: {
     statusIsring: false, //是否在振铃中
     statusIsCall: false, //是否在拨打中
-    statusIsHold: false, //是否在保持中
 
     callDirection: '', //呼叫方向
 
@@ -42,7 +47,6 @@ const useStore = create<Store & Action>()((set) => ({
 
     autoAnswer: false, //自动接听
     autoDisableMic: false, //自动静音
-    disableMic: false, //静音
 
     loading: null,
     locale: 'zh',
@@ -56,6 +60,8 @@ const useStore = create<Store & Action>()((set) => ({
   },
   historyLoginInfo: [],
   latency_stat: undefined,
+  setStatusIsHold: (statusIsHold) => set({ statusIsHold }),
+  setDisableMic: (disableMic) => set({ disableMic }),
   setCountTimeAction: (countTimeAction) => set({ countTimeAction }),
   setDiscallee: (discallee) => set({ discallee }),
   setLantencyStat: (latency_stat) => set({ latency_stat }),

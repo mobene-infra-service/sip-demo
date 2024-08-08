@@ -21,7 +21,6 @@ type LoginInfoType = {
 type SipStateType = {
   statusIsring: boolean //是否在振铃中
   statusIsCall: boolean //是否在拨打中
-  statusIsHold: boolean //是否在保持中
 
   callDirection: string //呼叫方向
 
@@ -39,7 +38,6 @@ type SipStateType = {
 
   autoAnswer: boolean //自动接听
   autoDisableMic: boolean //自动静音
-  disableMic: boolean //静音
 
   loading: null
   locale: 'zh' | 'en' | 'es' | 'pt'

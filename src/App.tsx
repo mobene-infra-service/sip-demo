@@ -18,6 +18,8 @@ function App() {
     setLantencyStat,
     setDiscallee,
     setCountTimeAction,
+    setDisableMic,
+    setStatusIsHold,
   } = useStore()
   const { currentLoginInfo, addHistoryLoginInfo } = useLoginStore()
   const [loading, setLoading] = useState(false)
@@ -78,12 +80,12 @@ function App() {
       case 'UNREGISTERED':
         setSipState({
           ...sipState,
-          statusIsHold: false,
           statusIsring: false,
           statusIsCall: false,
-          disableMic: false,
           callEndInfo: undefined,
         })
+        setStatusIsHold(false)
+        setDisableMic(false)
         setLantencyStat(undefined)
         setLogStatus(false)
         break
@@ -121,44 +123,33 @@ function App() {
           ...sipState,
           statusIsring: false,
           statusIsCall: true,
-          statusIsHold: false,
         })
+        setStatusIsHold(false)
+
         break
       case 'CALL_END':
         setSipState({
           ...sipState,
           statusIsring: false,
           statusIsCall: false,
-          statusIsHold: false,
-          disableMic: false,
           callEndInfo: data,
         })
+        setStatusIsHold(false)
+        setDisableMic(false)
         setCountTimeAction(TimeAction.Stop)
         setLantencyStat(undefined)
         break
       case 'HOLD':
-        setSipState({
-          ...sipState,
-          statusIsHold: true,
-        })
+        setStatusIsHold(true)
         break
       case 'UNHOLD':
-        setSipState({
-          ...sipState,
-          statusIsHold: false,
-        })
+        setStatusIsHold(false)
         break
       case 'MUTE':
-        setSipState({
-          ...sipState,
-          disableMic: true,
-        })
+        setDisableMic(true)
         break
       case 'UNMUTE':
-        setSipState({
-          ...sipState,
-          disableMic: false,
-        })
+        setDisableMic(false)
         break
       case 'CONNECTED':
         setLoading(false)
