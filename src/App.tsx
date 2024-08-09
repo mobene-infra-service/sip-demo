@@ -145,6 +145,7 @@ function App() {
           statusIsCall: false,
           callEndInfo: data,
         })
+        setCallbackInfo({})
         setStatusIsHold(false)
         setDisableMic(false)
         setCountTimeAction(TimeAction.Stop)
