@@ -9,6 +9,8 @@ type Store = {
   discallee: string
   disableMic: boolean
   statusIsHold: boolean
+  status: number
+  callbackInfo: any
 }
 
 type Action = {
@@ -19,6 +21,8 @@ type Action = {
   setStatusIsHold: (statusIsHold: boolean) => void
   setDisableMic: (disableMic: boolean) => void
   setDiscallee: (discallee: string) => void
+  setStatus: (status: number) => void
+  setCallbackInfo: (callbackInfo: any) => void
 }
 
 const useStore = create<Store & Action>()((set) => ({
@@ -60,6 +64,10 @@ const useStore = create<Store & Action>()((set) => ({
   },
   historyLoginInfo: [],
   latency_stat: undefined,
+  status: 0,
+  callbackInfo: {},
+  setStatus: (status) => set({ status }),
+  setCallbackInfo: (callbackInfo) => set({ callbackInfo }),
   setStatusIsHold: (statusIsHold) => set({ statusIsHold }),
   setDisableMic: (disableMic) => set({ disableMic }),
   setCountTimeAction: (countTimeAction) => set({ countTimeAction }),

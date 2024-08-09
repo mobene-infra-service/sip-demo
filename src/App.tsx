@@ -20,6 +20,8 @@ function App() {
     setCountTimeAction,
     setDisableMic,
     setStatusIsHold,
+    setCallbackInfo,
+    setStatus,
   } = useStore()
   const { currentLoginInfo, addHistoryLoginInfo } = useLoginStore()
   const [loading, setLoading] = useState(false)
@@ -34,6 +36,13 @@ function App() {
     })
   }, [])
 
+  const handleStatus = (status: number) => {
+    setStatus(status)
+  }
+  const handleCallbackInfo = (info: any) => {
+    setCallbackInfo(info)
+  }
+
   const login = () => {
     if (
       currentLoginInfo.host &&
@@ -43,6 +52,8 @@ function App() {
       const configure = {
         ...currentLoginInfo,
         stateEventListener: stateEventListener,
+        statusListener: handleStatus,
+        callbackInfo: handleCallbackInfo,
       }
       setLoading(true)
       const client = new SipClient(configure as any)

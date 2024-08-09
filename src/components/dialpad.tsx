@@ -17,7 +17,7 @@ import {
   DialogTitle,
 } from '@/components/ui/dialog'
 import { Progress } from '@/components/ui/progress'
-import { useEffect, useState } from 'react'
+import { useState } from 'react'
 import { toast } from 'sonner'
 import SipClient from 'sip-call-ring'
 import useStore from '@/store'
@@ -46,11 +46,13 @@ const Dialpad = (props: { sipClient: SipClient }) => {
     countTimeAction,
     disableMic,
     statusIsHold,
+    status,
+    callbackInfo,
+    setCallbackInfo,
   } = useStore()
 
   // state
   const [phoneNumber, setPhoneNumber] = useState('')
-  const [sipStatus, setSipStatus] = useState<number>(0)
   const [transferModalVisible, setTransferModalVisible] =
     useState<boolean>(false)
   const [transferNumber, setTransferNumber] = useState<string>('')
@@ -108,31 +110,12 @@ const Dialpad = (props: { sipClient: SipClient }) => {
   const makeCall = () => {
     sipClient?.call(phoneNumber.trim())
     setDiscallee(phoneNumber.trim())
+    setCallbackInfo({})
   }
 
   const hangup = () => {
     sipClient?.hangup()
   }
-
-  useEffect(() => {
-    let timer: NodeJS.Timeout | null
-    const handleStatusChange = () => {
-      if (sipClient && sipClient?.getSipStatus) {
-        // 实时更新sip status状态
-        timer = setInterval(() => {
-          setSipStatus(sipClient?.getSipStatus())
-        }, 1000)
-      }
-    }
-
-    handleStatusChange()
-
-    return () => {
-      if (timer) {
-        clearInterval(timer)
-      }
-    }
-  }, [])
 
   return (
     <div className="flex flex-col w-full">
@@ -275,9 +258,21 @@ const Dialpad = (props: { sipClient: SipClient }) => {
             </CardContent>
             <CardFooter>
               <div className="flex flex-col">
-                <div>Status: {statusMap[sipStatus]}</div>
-
-                {/* <div>CallbackInfo: {callbackInfo}</div> */}
+                <div>
+                  <strong>Status:</strong> {statusMap[status]}
+                </div>
+                {Object.keys(callbackInfo).length > 0 && (
+                  <>
+                    <strong>Callback Info:</strong>
+                    <div>
+                      {Object.keys(callbackInfo).map((key) => (
+                        <div key={key} className="ml-[26px]">
+                          {key}: {callbackInfo[key]}
+                        </div>
+                      ))}
+                    </div>
+                  </>
+                )}
               </div>
             </CardFooter>
           </Card>
