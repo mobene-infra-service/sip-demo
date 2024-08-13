@@ -66,6 +66,8 @@ function App() {
 
   const logout = () => {
     sipClient?.unregister()
+    setCallbackInfo({})
+    setStatus(0)
   }
 
   const stateEventListener = (event: any, data: any) => {
