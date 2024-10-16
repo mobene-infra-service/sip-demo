@@ -57,8 +57,8 @@ importers:
         specifier: ^15.0.0
         version: 15.0.0(i18next@23.12.2)(react-dom@18.3.1(react@18.3.1))(react@18.3.1)
       sip-call-ring:
-        specifier: ^1.3.16
-        version: 1.3.16
+        specifier: ^1.3.23
+        version: 1.3.23
       sonner:
         specifier: ^1.5.0
         version: 1.5.0(react-dom@18.3.1(react@18.3.1))(react@18.3.1)
@@ -1460,8 +1460,8 @@ packages:
     resolution: {integrity: sha512-RSn9F68PjH9HqtltsSnqYC1XXoWe9Bju5+213R98cNGttag9q9yAOTzdbsqvIa7aNm5WffBZFpWYr2aWrklWAw==}
     engines: {node: '>= 6'}
 
-  ofetch@1.3.4:
-    resolution: {integrity: sha512-KLIET85ik3vhEfS+3fDlc/BAZiAp+43QEC/yCo5zkNoY2YaKvNkOaFr/6wCFgFH1kuYQM5pMNi0Tg8koiIemtw==}
+  ofetch@1.4.1:
+    resolution: {integrity: sha512-QZj2DfGplQAr2oj9KzceK9Hwz6Whxazmn85yYeVuS3u9XTMOGMRx0kO95MQ+vLsj/S/NwBDMMLU5hpxvI6Tklw==}
 
   once@1.4.0:
     resolution: {integrity: sha512-lNaJgI+2Q5URQBkccEKHTQOPaXdUxnZZElQTZY0MFUAuaEqe1E+Nyvgdz/aIyNi6Z9MzO5dv1H8n58/GELp3+w==}
@@ -1691,8 +1691,8 @@ packages:
     resolution: {integrity: sha512-bzyZ1e88w9O1iNJbKnOlvYTrWPDl46O1bG0D3XInv+9tkPrxrN8jUUTiFlDkkmKWgn1M6CfIA13SuGqOa9Korw==}
     engines: {node: '>=14'}
 
-  sip-call-ring@1.3.16:
-    resolution: {integrity: sha512-iwmJXJJtP+nQk7KxGzkGxHKmkNGn+PmWXRRuP2xt14AuJeFnSxeHtTUtGrSAYwNNK1IbV3tsvNJFfY22rWjrQA==}
+  sip-call-ring@1.3.23:
+    resolution: {integrity: sha512-P7ipJmxPT03nFf2FF0vCpcdQQyOOD7XMJSuQFfsOYmktVP/E9b3jV98D7tkPMqZXsjpEYzTPtokax6KLVRV4Tg==}
 
   slash@3.0.0:
     resolution: {integrity: sha512-g9Q1haeby36OSStwb4ntCGGGaKsaVSjQ68fBxoQcutl5fS1vuY18H3wSt3jFyFtrkx+Kz0V1G85A4MyAdDMi2Q==}
@@ -3152,7 +3152,7 @@ snapshots:
 
   object-hash@3.0.0: {}
 
-  ofetch@1.3.4:
+  ofetch@1.4.1:
     dependencies:
       destr: 2.0.3
       node-fetch-native: 1.6.4
@@ -3366,11 +3366,11 @@ snapshots:
 
   signal-exit@4.1.0: {}
 
-  sip-call-ring@1.3.16:
+  sip-call-ring@1.3.23:
     dependencies:
       blueimp-md5: 2.19.0
       jssip: 3.10.1
-      ofetch: 1.3.4
+      ofetch: 1.4.1
       uuid: 8.3.2
     transitivePeerDependencies:
       - supports-color
