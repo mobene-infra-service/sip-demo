@@ -142,10 +142,10 @@ const Dialpad = (props: { sipClient: SipClient }) => {
           </>
         )}
       </div>
-      <div className="flex  flex-row items-center justify-between h-full w-full gap-4">
-        <div className="w-[48%]">
+      <div className="flex flex-col lg:flex-row w-full gap-4">
+        <div className="w-full lg:w-1/2">
           <Input
-            className="mt-8 text-2xl font-bold max-w-[500px]"
+            className="mt-8 text-2xl font-bold w-full"
             value={phoneNumber}
             onChange={(e) => setPhoneNumber(e.target.value)}
           />
@@ -230,8 +230,9 @@ const Dialpad = (props: { sipClient: SipClient }) => {
               ))}
           </div>
         </div>
-        <div className="w-[48%] flex flex-col gap-4">
-          <div className="flex flex-row justify-evenly items-center">
+
+        <div className="w-full lg:w-1/2">
+          <div className="flex flex-row justify-evenly items-center my-8">
             <Button onClick={setResting} size="sm" variant="outline">
               Set Resting
             </Button>
@@ -244,7 +245,7 @@ const Dialpad = (props: { sipClient: SipClient }) => {
               </Button>
             )}
           </div>
-          <Card>
+          <Card className="w-full">
             <CardHeader>
               <CardTitle>Info</CardTitle>
               <CardDescription>

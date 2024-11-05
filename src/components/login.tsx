@@ -29,7 +29,8 @@ const LoginComponent = () => {
   // 当所有currentLoginInfo的值改变时，更新store中的currentLoginInfo
   const handleCurrentLoginInfoChange = (key: string, value: any) => {
     // 如果值是字符串类型，去除所有空格
-    const processedValue = typeof value === 'string' ? value.replace(/\s+/g, '') : value
+    const processedValue =
+      typeof value === 'string' ? value.replace(/\s+/g, '') : value
     setCurrentLoginInfo({
       ...currentLoginInfo,
       [key]: processedValue,
@@ -88,7 +89,7 @@ const LoginComponent = () => {
               <div className="relative">
                 <Input
                   id="password"
-                  type={showLoginPassword ? "text" : "password"}
+                  type={showLoginPassword ? 'text' : 'password'}
                   placeholder="input your password"
                   value={currentLoginInfo.extPwd}
                   onChange={(e) => {
@@ -153,9 +154,7 @@ const LoginComponent = () => {
                   placeholder="your domain"
                   value={currentLoginInfo.domain}
                   onChange={(e) => {
-                    if (e.target.value) {
-                      handleCurrentLoginInfoChange('domain', e.target.value)
-                    }
+                    handleCurrentLoginInfoChange('domain', e.target.value)
                   }}
                 />
               </div>
