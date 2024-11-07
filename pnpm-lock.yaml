@@ -60,8 +60,8 @@ importers:
         specifier: ^15.0.0
         version: 15.0.0(i18next@23.12.2)(react-dom@18.3.1(react@18.3.1))(react@18.3.1)
       sip-call-ring:
-        specifier: ^1.3.24
-        version: 1.3.24
+        specifier: ^1.3.26
+        version: 1.3.26
       sonner:
         specifier: ^1.5.0
         version: 1.5.0(react-dom@18.3.1(react@18.3.1))(react@18.3.1)
@@ -71,6 +71,9 @@ importers:
       tailwindcss-animate:
         specifier: ^1.0.7
         version: 1.0.7(tailwindcss@3.4.7)
+      vconsole:
+        specifier: ^3.15.1
+        version: 3.15.1
       zustand:
         specifier: ^4.5.4
         version: 4.5.4(@types/react@18.3.3)(react@18.3.1)
@@ -1089,6 +1092,13 @@ packages:
   concat-map@0.0.1:
     resolution: {integrity: sha512-/Srv4dswyQNBfohGpz9o6Yb3Gz3SrUDqBH5rTuhGR7ahtlbYKnVxw2bCFMRljaA7EXHaXZ8wsHdodFvbkhKmqg==}
 
+  copy-text-to-clipboard@3.2.0:
+    resolution: {integrity: sha512-RnJFp1XR/LOBDckxTib5Qjr/PMfkatD0MUCQgdpqS8MdKiNUzBjAQBEN6oUy+jW7LI93BBG3DtMB2KOOKpGs2Q==}
+    engines: {node: '>=12'}
+
+  core-js@3.39.0:
+    resolution: {integrity: sha512-raM0ew0/jJUqkJ0E6e8UDtl+y/7ktFivgWvqw8dNSQeNWoSDLvQ1H/RN3aPXB9tBd4/FhyR4RDPGhsNIMsAn7g==}
+
   cross-spawn@7.0.3:
     resolution: {integrity: sha512-iRDPJKUPVEND7dHPO8rkbOnPpyDygcDFtWjpeWNCgy8WP2rXcxXL8TskReQl6OrB2G7+UJrags1q15Fudc7G6w==}
     engines: {node: '>= 8'}
@@ -1446,6 +1456,9 @@ packages:
   ms@2.1.2:
     resolution: {integrity: sha512-sGkPx+VjMtmA6MX27oA4FBFELFCZZ4S4XqeGOXCv68tT+jb3vk/RyaKWP0PTKyWtmLSM0b+adUTEvbs1PEaH2w==}
 
+  mutation-observer@1.0.3:
+    resolution: {integrity: sha512-M/O/4rF2h776hV7qGMZUH3utZLO/jK7p8rnNgGkjKUw8zCGjRQPxB8z6+5l8+VjRUQ3dNYu4vjqXYLr+U8ZVNA==}
+
   mz@2.7.0:
     resolution: {integrity: sha512-z81GNO7nnYMEhrGh9LeymoE4+Yr0Wn5McHIZMK5cfQCl+NDX08sCZgUc9/6MHni9IWuFLm1Z3HTCXu2z9fN62Q==}
 
@@ -1723,8 +1736,8 @@ packages:
     resolution: {integrity: sha512-bzyZ1e88w9O1iNJbKnOlvYTrWPDl46O1bG0D3XInv+9tkPrxrN8jUUTiFlDkkmKWgn1M6CfIA13SuGqOa9Korw==}
     engines: {node: '>=14'}
 
-  sip-call-ring@1.3.24:
-    resolution: {integrity: sha512-OTzarQ9A+AAfUNSyKqkWQN7y/d67/1qR6TMnZYJJfjhTHCpBZf/xeuXj1sTpILFYryZEqRvkJzF6gyqnFqhMYA==}
+  sip-call-ring@1.3.26:
+    resolution: {integrity: sha512-oNJ7q0/r+Y6u+37NkTW7OgNwBD2v7h66sQNy9ftRXSs1jYsIAXPbv0uUm6vCy3sNfXGpFqMkHVLtWNWXkb0moA==}
 
   slash@3.0.0:
     resolution: {integrity: sha512-g9Q1haeby36OSStwb4ntCGGGaKsaVSjQ68fBxoQcutl5fS1vuY18H3wSt3jFyFtrkx+Kz0V1G85A4MyAdDMi2Q==}
@@ -1875,6 +1888,9 @@ packages:
   uuid@8.3.2:
     resolution: {integrity: sha512-+NYs2QeMWy+GWFOEm9xnn6HCDp0l7QBD7ml8zLUmJ+93Q5NF0NocErnwkTkXVFNiX3/fpC6afS8Dhb/gz7R7eg==}
     hasBin: true
+
+  vconsole@3.15.1:
+    resolution: {integrity: sha512-KH8XLdrq9T5YHJO/ixrjivHfmF2PC2CdVoK6RWZB4yftMykYIaXY1mxZYAic70vADM54kpMQF+dYmvl5NRNy1g==}
 
   vite-plugin-singlefile@2.0.3:
     resolution: {integrity: sha512-OEBEwdX8nCGPSdtaB1D7rryYnT+YfPTS8ojL1TDyeUF+bWDCTfRriQqw6T0vl9EbKI/KMg7szN3awst6cLrKkA==}
@@ -2801,6 +2817,10 @@ snapshots:
 
   concat-map@0.0.1: {}
 
+  copy-text-to-clipboard@3.2.0: {}
+
+  core-js@3.39.0: {}
+
   cross-spawn@7.0.3:
     dependencies:
       path-key: 3.1.1
@@ -3186,6 +3206,8 @@ snapshots:
 
   ms@2.1.2: {}
 
+  mutation-observer@1.0.3: {}
+
   mz@2.7.0:
     dependencies:
       any-promise: 1.3.0
@@ -3437,7 +3459,7 @@ snapshots:
 
   signal-exit@4.1.0: {}
 
-  sip-call-ring@1.3.24:
+  sip-call-ring@1.3.26:
     dependencies:
       blueimp-md5: 2.19.0
       jssip: 3.10.1
@@ -3594,6 +3616,13 @@ snapshots:
   util-deprecate@1.0.2: {}
 
   uuid@8.3.2: {}
+
+  vconsole@3.15.1:
+    dependencies:
+      '@babel/runtime': 7.25.0
+      copy-text-to-clipboard: 3.2.0
+      core-js: 3.39.0
+      mutation-observer: 1.0.3
 
   vite-plugin-singlefile@2.0.3(rollup@4.24.4)(vite@5.4.10(@types/node@22.0.2)):
     dependencies:

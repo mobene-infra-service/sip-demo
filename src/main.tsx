@@ -3,6 +3,8 @@ import ReactDOM from 'react-dom/client'
 import App from './App.tsx'
 import './index.css'
 import { Toaster } from '@/components/ui/sonner'
+import VConsole from 'vconsole'
+new VConsole()
 
 ReactDOM.createRoot(document.getElementById('root')!).render(
   <React.StrictMode>
