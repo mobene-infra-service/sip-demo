@@ -265,9 +265,12 @@ const Dialpad = (props: { sipClient: SipClient }) => {
                 {Object.keys(callbackInfo).length > 0 && (
                   <>
                     <strong>Callback Info:</strong>
-                    <div>
+                    <div className="overflow-auto max-h-40">
                       {Object.keys(callbackInfo).map((key) => (
-                        <div key={key} className="ml-[26px]">
+                        <div
+                          key={key}
+                          className="ml-[26px] break-words whitespace-pre-wrap"
+                        >
                           {key}: {callbackInfo[key]}
                         </div>
                       ))}
