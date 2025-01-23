@@ -7,6 +7,9 @@ yarn-error.log*
 pnpm-debug.log*
 lerna-debug.log*
 
+deploy-key.pem
+deploy.sh
+
 node_modules
 dist
 dist-ssr
@@ -24,6 +27,3 @@ dist-ssr
 *.sw?
 .aider*
 .env
-.pem*
-deploy-key.pem
-deploy.sh
