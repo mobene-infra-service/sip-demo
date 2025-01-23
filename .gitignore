@@ -24,3 +24,6 @@ dist-ssr
 *.sw?
 .aider*
 .env
+.pem*
+deploy-key.pem
+deploy.sh
