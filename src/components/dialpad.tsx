@@ -23,16 +23,16 @@ import SipClient from 'sip-call-ring'
 import useStore from '@/store'
 import TimeCount from '@/components/time-count'
 
-// 1: 离线, 2: 空闲, 3: 响铃中, 4: 通话中, 5: 摘机中, 6: 小休中 7:转接中
+// 1: 离线, 2: 在线, 3: 响铃中, 4: 通话中, 5: 呼叫中, 6: 小休中 7:忙碌中 8:整理中
 const statusMap: { [key: number]: string } = {
-  0: '未连接',
   1: '离线',
-  2: '空闲',
+  2: '在线',
   3: '响铃中',
   4: '通话中',
-  5: '摘机中',
+  5: '呼叫中',
   6: '小休中',
-  7: '转接中',
+  7: '忙碌中',
+  8: '整理中',
 }
 
 const Dialpad = (props: { sipClient: SipClient }) => {
@@ -86,6 +86,10 @@ const Dialpad = (props: { sipClient: SipClient }) => {
 
   const setIdle = () => {
     sipClient?.setIdle()
+  }
+
+  const setBusy = () => {
+    sipClient?.setBusy()
   }
   const answer = () => {
     sipClient?.answer()
@@ -188,7 +192,9 @@ const Dialpad = (props: { sipClient: SipClient }) => {
             </Button>
           </div>
           <div className="mt-8 flex gap-4">
-            <Button onClick={makeCall}>Call</Button>
+            {![1, 8, 5, 4, 3].includes(status) && (
+              <Button onClick={makeCall}>Call</Button>
+            )}
             {(sipState.statusIsring || sipState.statusIsCall) && (
               <Button
                 variant="secondary"
@@ -238,6 +244,9 @@ const Dialpad = (props: { sipClient: SipClient }) => {
             </Button>
             <Button onClick={setIdle} size="sm" variant="outline">
               Set Idle
+            </Button>
+            <Button onClick={setBusy} size="sm" variant="outline">
+              Set Busy
             </Button>
             {sipState.statusIsCall && (
               <Button onClick={openTransferDialog} size="sm" variant="outline">

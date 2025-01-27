@@ -54,6 +54,7 @@ function App() {
         stateEventListener: stateEventListener,
         statusListener: handleStatus,
         callbackInfo: handleCallbackInfo,
+        groupCallNotify: handleGroupCallNotify,
       }
       setLoading(true)
       const client = new SipClient(configure as any)
@@ -68,6 +69,10 @@ function App() {
     sipClient?.unregister()
     setCallbackInfo({})
     setStatus(0)
+  }
+
+  const handleGroupCallNotify = (info: any) => {
+    console.log('123---->收到群组呼叫通知:', info)
   }
 
   const stateEventListener = (event: any, data: any) => {
