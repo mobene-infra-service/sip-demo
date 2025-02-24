@@ -55,6 +55,7 @@ function App() {
         statusListener: handleStatus,
         callbackInfo: handleCallbackInfo,
         groupCallNotify: handleGroupCallNotify,
+        otherEvent: handleOtherEvent,
       }
       setLoading(true)
       const client = new SipClient(configure as any)
@@ -63,6 +64,10 @@ function App() {
     } else {
       toast.error('Please fill in the login information')
     }
+  }
+
+  const handleOtherEvent = (data: any) => {
+    console.log('收到其他事件:', data)
   }
 
   const logout = () => {
