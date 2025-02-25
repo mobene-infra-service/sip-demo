@@ -60,8 +60,8 @@ importers:
         specifier: ^15.0.0
         version: 15.0.0(i18next@23.12.2)(react-dom@18.3.1(react@18.3.1))(react@18.3.1)
       sip-call-ring:
-        specifier: ^1.4.8
-        version: 1.4.8
+        specifier: ^1.4.12
+        version: 1.4.12
       sonner:
         specifier: ^1.5.0
         version: 1.5.0(react-dom@18.3.1(react@18.3.1))(react@18.3.1)
@@ -1736,8 +1736,8 @@ packages:
     resolution: {integrity: sha512-bzyZ1e88w9O1iNJbKnOlvYTrWPDl46O1bG0D3XInv+9tkPrxrN8jUUTiFlDkkmKWgn1M6CfIA13SuGqOa9Korw==}
     engines: {node: '>=14'}
 
-  sip-call-ring@1.4.8:
-    resolution: {integrity: sha512-r3NdlIbXaKMLDsBc0mz5bxuHElS5xeT+PSTpEzvCW7cwuFbSQry4MfjbqZ+lkc+CEghv82Hx5W0lIz4O9xTJEg==}
+  sip-call-ring@1.4.12:
+    resolution: {integrity: sha512-cpA6OraT0dD6J6LtPzXDQMVo0L5wKoHeyXTxA9plW/mn6INwJ9PVD9NIf+4uSZV6CF9xYHL6pr2CZX0GEyrdbQ==}
 
   slash@3.0.0:
     resolution: {integrity: sha512-g9Q1haeby36OSStwb4ntCGGGaKsaVSjQ68fBxoQcutl5fS1vuY18H3wSt3jFyFtrkx+Kz0V1G85A4MyAdDMi2Q==}
@@ -3459,7 +3459,7 @@ snapshots:
 
   signal-exit@4.1.0: {}
 
-  sip-call-ring@1.4.8:
+  sip-call-ring@1.4.12:
     dependencies:
       blueimp-md5: 2.19.0
       jssip: 3.10.1
